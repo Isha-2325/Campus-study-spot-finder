@@ -1,7 +1,9 @@
 export type StudySpot = {
   id: string;
+  areaId: string;
   name: string;
   building: string;
+  address: string;
   distance: string;
   rating: number;
   reviewCount: number;
@@ -20,13 +22,55 @@ export type StudySpot = {
   category: "Library" | "Silent café" | "Co-working space" | "Outdoor quiet zone";
   latitude: number;
   longitude: number;
+  reviewHighlights: string[];
 };
+
+export type CampusArea = {
+  id: string;
+  name: string;
+  subtitle: string;
+  summary: string;
+  vibe: string;
+};
+
+export const campusAreas: CampusArea[] = [
+  {
+    id: "north-quad",
+    name: "North Quad",
+    subtitle: "Quiet and academic",
+    summary: "Best for focused study blocks and library culture.",
+    vibe: "Deep focus",
+  },
+  {
+    id: "innovation-district",
+    name: "Innovation District",
+    subtitle: "Productive and social",
+    summary: "Ideal for group work, review sessions, and collaborative study.",
+    vibe: "Group review",
+  },
+  {
+    id: "student-hub",
+    name: "Student Hub",
+    subtitle: "Coffee, energy, and flexible work",
+    summary: "Great for a relaxed but active study rhythm with snacks and community energy.",
+    vibe: "Creative flow",
+  },
+  {
+    id: "arts-courtyard",
+    name: "Arts Courtyard",
+    subtitle: "Calm and scenic",
+    summary: "A lighter environment for reading, planning, and reflective work.",
+    vibe: "Light focus",
+  },
+];
 
 export const studySpots: StudySpot[] = [
   {
     id: "harbor-library",
+    areaId: "north-quad",
     name: "Harbor Library Nook",
     building: "Main Library",
+    address: "Main Library, 100 Campus Way, North Quad",
     distance: "0.2 mi",
     rating: 4.9,
     reviewCount: 184,
@@ -39,18 +83,21 @@ export const studySpots: StudySpot[] = [
     vibe: "Quiet and focused",
     mapX: 24,
     mapY: 55,
-    summary: "Best for deep work, silent study blocks, and reliable Wi-Fi.",
-    tags: ["Quiet", "Fast Wi-Fi", "Power outlets"],
+    summary: "Best for deep work, silent study blocks, and reliable Wi‑Fi.",
+    tags: ["Quiet", "Fast Wi‑Fi", "Power outlets"],
     features: ["Silent zones", "Charging desks", "Natural light"],
     openUntil: "10:00 PM",
     category: "Library",
     latitude: 40.4415,
     longitude: -79.944,
+    reviewHighlights: ["Highest student rating", "Perfect for finals prep", "Strongest Wi‑Fi"],
   },
   {
     id: "innovation-lab",
+    areaId: "innovation-district",
     name: "Innovation Lab Lounge",
     building: "STEM Center",
+    address: "STEM Center, 240 Research Lane, Innovation District",
     distance: "0.6 mi",
     rating: 4.8,
     reviewCount: 142,
@@ -63,18 +110,21 @@ export const studySpots: StudySpot[] = [
     vibe: "Productive and social",
     mapX: 53,
     mapY: 34,
-    summary: "A solid mix of collaboration and focus with lots of desk space.",
-    tags: ["Group work", "Strong Wi-Fi", "High mobility"],
+    summary: "A solid mix of collaboration and focus with plenty of desk space and screens.",
+    tags: ["Group work", "Strong Wi‑Fi", "High mobility"],
     features: ["Whiteboards", "Monitor stations", "USB ports"],
     openUntil: "9:30 PM",
     category: "Co-working space",
     latitude: 40.4429,
     longitude: -79.9418,
+    reviewHighlights: ["Best for team projects", "Excellent charging access", "Very productive energy"],
   },
   {
     id: "greenhouse-cafe",
+    areaId: "student-hub",
     name: "Greenhouse Café",
     building: "Student Union",
+    address: "Student Union Plaza, 88 Social Avenue, Student Hub",
     distance: "0.8 mi",
     rating: 4.6,
     reviewCount: 96,
@@ -87,18 +137,21 @@ export const studySpots: StudySpot[] = [
     vibe: "Buzzing but energizing",
     mapX: 72,
     mapY: 62,
-    summary: "Great when you want an active environment with snacks and quick coffee breaks.",
+    summary: "Great for active study sessions with snacks, coffee, and a social rhythm.",
     tags: ["Coffee", "Group study", "Social vibe"],
     features: ["Barista coffee", "Long tables", "Lounge seating"],
     openUntil: "11:00 PM",
     category: "Silent café",
     latitude: 40.4397,
     longitude: -79.9412,
+    reviewHighlights: ["Good coffee and energy", "Strong social atmosphere", "Nice for short blocks"],
   },
   {
     id: "sunset-garden",
+    areaId: "arts-courtyard",
     name: "Sunset Garden Courtyard",
     building: "Arts Quad",
+    address: "Arts Quad, 30 Meadow Lane, Arts Courtyard",
     distance: "1.1 mi",
     rating: 4.5,
     reviewCount: 78,
@@ -111,19 +164,20 @@ export const studySpots: StudySpot[] = [
     vibe: "Calm and refreshing",
     mapX: 38,
     mapY: 74,
-    summary: "Perfect for reading, journaling, or low-pressure study sessions outdoors.",
+    summary: "Perfect for reading, journaling, or low-pressure outdoor study sessions.",
     tags: ["Outdoor", "Low traffic", "Nature"],
     features: ["Shade seating", "Outdoor tables", "Scenic view"],
     openUntil: "8:30 PM",
     category: "Outdoor quiet zone",
     latitude: 40.4435,
     longitude: -79.9473,
+    reviewHighlights: ["Great for reading", "Relaxed environment", "A calmer reset spot"],
   },
 ];
 
 export const quickReplies = [
   "Find the quietest place",
-  "Best Wi-Fi spots",
+  "Best Wi‑Fi spots",
   "Show me outlets nearby",
   "How do I leave a review?",
 ];
@@ -138,11 +192,11 @@ export const botSeedMessages: ChatMessage[] = [
   {
     id: "welcome",
     role: "bot",
-    text: "Hi! I can help you find the best study spot on campus. Try filtering by quiet spaces or strong Wi‑Fi.",
+    text: "Hi! I can help you find the best study spot on campus. Choose your area and I’ll match the closest fit.",
   },
   {
     id: "guide",
     role: "bot",
-    text: "Need help? I can suggest a location, explain which spot matches your vibe, or walk you through leaving a study review.",
+    text: "Need help? I can suggest a location based on your study vibe, current area, or your need for Wi‑Fi or quiet.",
   },
 ];
