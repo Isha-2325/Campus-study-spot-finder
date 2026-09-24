@@ -1,29 +1,29 @@
 # QuietFind
 
-A mobile-first campus study app that helps students discover the best nearby study environment based on location, study mode, and real campus feedback.
+QuietFind is a mobile-first campus study companion that helps students discover the best nearby study spaces based on location, vibe, quiet level, Wi‑Fi quality, and peer reviews.
 
-## Overview
+It is built for students who want a quick answer to questions like:
 
-Campus Study Spot Finder is designed for students who want a quick answer to questions like:
+- Where is the quietest place to study right now?
+- Which nearby space has the strongest Wi‑Fi?
+- Where can I work with a group without getting distracted?
+- Which campus spots are best for deep focus or quick revision?
 
-- Where is the quietest spot for revision?
-- Which place has the best Wi‑Fi for a long session?
-- Where can I study with a group nearby?
-- Which campus spaces are best for focused work and low crowding?
+## Why QuietFind
 
-The app ranks places using location, noise level, Wi‑Fi strength, outlet availability, crowd density, and study preference.
+QuietFind combines the convenience of a guided mobile app with a practical campus recommendation engine. It is designed to help students move quickly from signup to location-based discovery without overloading them with cluttered or complicated UI.
 
-## Features
+## Core Features
 
 - Mobile-first onboarding flow
-- Email/mobile sign-up with OTP simulation
-- Location-aware recommendations
-- Sort and filter controls
-- Campus-area selection flow
-- Save favorite study spots
-- Student review cards and recommendation scoring
-- Backend API ready for a real Postgres database
-- Graceful fallback to local mock data when no database is configured
+- Email or mobile sign-up flow with OTP simulation
+- Location-aware campus recommendations
+- Area-based discovery and filtering
+- Sorting by study needs and preferences
+- Quiet, café, coworking, and outdoor quiet-zone options
+- Review-based spot ranking
+- Real backend-ready architecture with PostgreSQL
+- Graceful fallback to mock data when the database is not connected
 
 ## Tech Stack
 
@@ -33,7 +33,7 @@ The app ranks places using location, noise level, Wi‑Fi strength, outlet avail
 - Tailwind CSS
 - PostgreSQL
 - pg client
-- OpenStreetMap-based map embeds for a free, no-billing setup
+- OpenStreetMap-based embedded map views
 - Lucide React icons
 
 ## Project Structure
@@ -80,13 +80,13 @@ npm install
 
 ### 2. Set up environment variables
 
-Copy the sample env file:
+Create your local environment file from the sample:
 
 ```bash
 copy .env.example .env.local
 ```
 
-Update the values in `.env.local` for your local Postgres instance:
+Then update `.env.local` with your local values:
 
 ```env
 NEXT_PUBLIC_MAP_PROVIDER=openstreetmap
@@ -103,13 +103,13 @@ Create a local database named `campus_study_spot_finder` and then run the schema
 psql -U postgres -d campus_study_spot_finder -f postgres/schema.sql
 ```
 
-If you want seed campus and study spot data, run:
+If you want seed data for campus areas and study spots, run:
 
 ```bash
 psql -U postgres -d campus_study_spot_finder -f postgres/seed.sql
 ```
 
-### 4. Run the app
+### 4. Run the app locally
 
 ```bash
 npm run dev -- --hostname 0.0.0.0
@@ -127,27 +127,31 @@ http://localhost:3000
 npm run build
 ```
 
-## Backend API
+## API Overview
 
-The app already exposes these real backend routes:
+The app exposes the following backend endpoints:
 
-- `GET /api/study-spots` — load campus areas and study spots
+- `GET /api/study-spots` — fetch campus areas and study spots
 - `GET /api/reviews` — fetch reviews by spot
-- `POST /api/reviews` — add a review
+- `POST /api/reviews` — submit a student review
 - `POST /api/auth` — sign-up and OTP flow
-- `GET /api/health` — app and DB status check
+- `GET /api/health` — check app and database health
 
-If `DATABASE_URL` is missing or unreachable, the app falls back to mock local data so development can continue without a database.
+If no database is configured, the app falls back to the local mock dataset so development can continue smoothly.
 
 ## Notes
 
-This is now structured as a real full-stack app rather than a static mock prototype. The backend is Postgres-ready, but the app still gracefully degrades to the local dataset until a live database is connected.
+This project is structured as a real full-stack app rather than a static mock prototype. The backend is PostgreSQL-ready, and the frontend gracefully falls back to local data until a live database connection is configured.
 
 ## Roadmap
 
 - Optional upgrade to a paid map provider later
-- Real SMS/email OTP provider
+- Real SMS or email OTP provider
 - Live occupancy and availability data
 - Campus admin dashboard
-- Authentication and saved student preferences
+- Saved user preferences and personal study history
 - Deployment to Vercel or another hosting platform
+
+## License
+
+This project is currently for learning and product prototyping purposes.
